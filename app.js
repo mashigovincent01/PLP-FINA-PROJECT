@@ -1,12 +1,26 @@
+const express = require('express');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const passport = require('./config/passport');
 const sequelize = require('./models/db');
-const UserRole = require('./models/UserRole');
-const User = require('./models/User');
-const Patient = require('./models/Patient');
-const Doctor = require('./models/Doctor');
-const Appointment = require('./models/Appointment');
-const MedicalRecord = require('./models/MedicalRecord');
+const authRoutes = require('./routes/auth');
 
-// Sync models
-sequelize.sync({ alter: true })
-    .then(() => console.log('Models synced with the database'))
-    .catch(err => console.error('Failed to sync models:', err));
+const app = express();
+
+// Session configuration
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        store: new SequelizeStore({
+            db: sequelize,
+        }),
+    })
+);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoutes);
