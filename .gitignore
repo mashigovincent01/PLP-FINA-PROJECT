@@ -1,0 +1,39 @@
+# Node.js
+/node_modules
+/package-lock.json
+/npm-debug.log
+
+# Logs
+*.log
+logs
+*.log.*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database files
+# *.sql
+*.sqlite
+
+# Build files
+/dist
+/build
+/public
+
+# Dependency directories
+/bower_components
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE or editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Misc
+*.swp
+*.swo
